@@ -14,7 +14,7 @@ export function Header() {
     <div className={styles.container}>
       <div>
         <Link to="/" className={styles.link}>
-          <h1>TRJ Megastore</h1>
+          <h1>TJA Megastore</h1>
         </Link>
 
         {session && (

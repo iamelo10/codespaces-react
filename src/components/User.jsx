@@ -18,7 +18,7 @@ export function User() {
   // Buscar produtos se o usuário for admin
   useEffect(() => {
     async function fetchProducts() {
-      const { data, error } = await supabase.from("product_2v").select();
+      const { data, error } = await supabase.from("product_1v").select();
       if (!error) setProducts(data);
     }
     if (session?.user?.user_metadata?.admin) fetchProducts();
@@ -27,7 +27,7 @@ export function User() {
   // Funções de CRUD
   async function handleAddProduct(e) {
     e.preventDefault();
-    const { data, error } = await supabase.from("product_2v").insert([newProduct]);
+    const { data, error } = await supabase.from("product_1v").insert([newProduct]);
     if (!error) {
       setProducts([...products, data[0]]);
       setNewProduct({ title: "", price: "", description: "", thumbnail: "" });
@@ -35,14 +35,14 @@ export function User() {
   }
 
   async function handleDeleteProduct(id) {
-    await supabase.from("product_2v").delete().eq("id", id);
+    await supabase.from("product_1v").delete().eq("id", id);
     setProducts(products.filter((p) => p.id !== id));
   }
 
   async function handleUpdateProduct(id) {
     const newTitle = prompt("Novo título:");
     if (!newTitle) return;
-    await supabase.from("product_2v").update({ title: newTitle }).eq("id", id);
+    await supabase.from("product_1v").update({ title: newTitle }).eq("id", id);
     setProducts(products.map((p) => (p.id === id ? { ...p, title: newTitle } : p)));
   }
 

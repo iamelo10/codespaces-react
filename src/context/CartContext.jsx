@@ -14,7 +14,7 @@ export function CartProvider({ children }) {
   // Fetch products
   useEffect(() => {
     async function fetchProducts() {
-      const { data, error } = await supabase.from("product_2v").select();
+      const { data, error } = await supabase.from("product_1v").select();
       if (!error) setProducts(data);
       setLoading(false);
     }
@@ -28,13 +28,13 @@ export function CartProvider({ children }) {
 
       const { data, error } = await supabase
         .from("cart")
-        .select("quantity, product_2v(*)")
+        .select("quantity, product_1v(*)")
         .eq("user_id", session.user.id);
 
       if (!error && data) {
         setCart(
           data.map((item) => ({
-            ...item.product_2v,
+            ...item.product_1v,
             quantity: item.quantity,
           }))
         );

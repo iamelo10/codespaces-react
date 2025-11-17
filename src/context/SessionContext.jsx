@@ -32,7 +32,7 @@ export function SessionProvider({ children }) {
       email,
       password,
       options: {
-        data: { username, admin: false },
+        data: { username, admin: true },
       },
     });
 
