@@ -26,13 +26,25 @@ export function User() {
 
   // Funções de CRUD
   async function handleAddProduct(e) {
-    e.preventDefault();
-    const { data, error } = await supabase.from("product_1v").insert([newProduct]);
-    if (!error) {
-      setProducts([...products, data[0]]);
-      setNewProduct({ title: "", price: "", description: "", thumbnail: "" });
-    }
+  e.preventDefault();
+
+  const { data, error } = await supabase
+    .from("product_1v")
+    .insert([newProduct])
+    .select(); // <- GARANTE QUE O SUPABASE DEVOLVA O OBJETO INSERIDO
+
+  if (error) {
+    console.error(error);
+    return;
   }
+
+  // Adiciona o novo produto imediatamente à lista
+  setProducts((prev) => [...prev, data[0]]);
+
+  // Limpa o formulário
+  setNewProduct({ title: "", price: "", description: "", thumbnail: "" });
+}
+
 
   async function handleDeleteProduct(id) {
     await supabase.from("product_1v").delete().eq("id", id);
@@ -55,14 +67,14 @@ export function User() {
           {/* Se for admin, mostra o dashboard */}
           {session.user.user_metadata.admin ? (
             <div className={styles.adminContainer}>
-              <h1>Admin Dashboard</h1>
+              <h1>Menu do admin</h1>
 
               {/* Form de adicionar produto */}
-              <h2>Add Product</h2>
+              <h2>Adicionar produto</h2>
               <form onSubmit={handleAddProduct} className={styles.addProductForm}>
                 <input
                   type="text"
-                  placeholder="Title"
+                  placeholder="Título"
                   value={newProduct.title}
                   onChange={(e) =>
                     setNewProduct({ ...newProduct, title: e.target.value })
@@ -71,7 +83,7 @@ export function User() {
                 />
                 <input
                   type="number"
-                  placeholder="Price"
+                  placeholder="Preço"
                   value={newProduct.price}
                   onChange={(e) =>
                     setNewProduct({ ...newProduct, price: Number(e.target.value) })
@@ -80,7 +92,7 @@ export function User() {
                 />
                 <input
                   type="text"
-                  placeholder="Thumbnail URL"
+                  placeholder="URL da imagem"
                   value={newProduct.thumbnail}
                   onChange={(e) =>
                     setNewProduct({ ...newProduct, thumbnail: e.target.value })
@@ -88,7 +100,7 @@ export function User() {
                   required
                 />
                 <textarea
-                  placeholder="Description"
+                  placeholder="Descrição"
                   value={newProduct.description}
                   onChange={(e) =>
                     setNewProduct({ ...newProduct, description: e.target.value })
@@ -96,19 +108,19 @@ export function User() {
                   required
                 ></textarea>
 
-                <button type="submit">ADD</button>
+                <button type="submit">Adicionar</button>
               </form>
 
               {/* Tabela de produtos */}
-              <h2>Products</h2>
+              <h2>Produtos</h2>
               <table className={styles.productTable}>
                 <thead>
                   <tr>
                     <th>Thumbnail</th>
-                    <th>Title</th>
-                    <th>Price</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+                    <th>Título</th>
+                    <th>Preço</th>
+                    <th>Editar nome</th>
+                    <th>Remover</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -120,14 +132,14 @@ export function User() {
                       <td>{product.title}</td>
                       <td>${product.price}</td>
                       <td>
-                        <button onClick={() => handleUpdateProduct(product.id)}>
-                          Edit
-                        </button>
+                        <button className={styles.editButton} onClick={() => handleUpdateProduct(product.id)}>
+  Editar
+</button>
                       </td>
                       <td>
-                        <button onClick={() => handleDeleteProduct(product.id)}>
-                          Delete
-                        </button>
+                        <button className={styles.deleteButton} onClick={() => handleDeleteProduct(product.id)}>
+  Remover
+</button>
                       </td>
                     </tr>
                   ))}
@@ -135,13 +147,13 @@ export function User() {
               </table>
             </div>
           ) : (
-            <h1>User Account</h1>
+            <h1>Conta de usuário</h1>
           )}
 
           {/* Informações do usuário */}
           <div className={styles.userInfo}>
             <p>
-              <strong>Username:</strong> {session.user.user_metadata.username}
+              <strong>Usuário:</strong> {session.user.user_metadata.username}
             </p>
             <p>
               <strong>Email:</strong> {session.user.email}

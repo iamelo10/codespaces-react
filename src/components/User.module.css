@@ -5,6 +5,7 @@
   margin-top: 15rem;
   gap: 2rem;
   padding: 2rem;
+  color: black;
 }
 
 .container h1 {
@@ -37,4 +38,146 @@
 .button:hover {
   background-color: var(--primary-dark);
   color: var(--gray-100);
+}
+
+.adminContainer {
+  width: 90%;
+  max-width: 1100px;
+  background: var(--gray-900);
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  margin-bottom: 3rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.adminContainer h1 {
+  font-size: 3.6rem;
+  margin-bottom: 2rem;
+  color: var(--primary);
+  text-align: center;
+}
+
+.adminContainer h2 {
+  font-size: 2.6rem;
+  margin: 2rem 0 1rem;
+  color: var(--primary-light);
+}
+
+/* FORM ADD PRODUCT */
+.addProductForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2rem;
+  background: var(--gray-800);
+  border-radius: 1rem;
+}
+
+.addProductForm input,
+.addProductForm textarea {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
+  border: 2px solid var(--gray-700);
+  background: var(--gray-900);
+  color: var(--gray-100);
+  transition: border-color 0.2s ease;
+}
+
+.addProductForm input:focus,
+.addProductForm textarea:focus {
+  border-color: var(--primary);
+}
+
+.addProductForm button {
+  width: 100%;
+  background: var(--primary);
+  color: var(--gray-900);
+  padding: 1.4rem;
+  font-size: 1.8rem;
+  border: none;
+  border-radius: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.addProductForm button:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+
+/* TABLE */
+.productTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: var(--gray-800);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.productTable th,
+.productTable td {
+  padding: 1.4rem;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.productTable th {
+  background: var(--gray-700);
+  color: var(--primary);
+}
+
+.productTable tr:nth-child(even) {
+  background: var(--gray-850);
+}
+
+.productTable img {
+  border-radius: 0.6rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* ACTION BUTTONS */
+.editButton,
+.deleteButton {
+  padding: 0.8rem 1.4rem;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.editButton {
+  background: #3fa7f5;
+  color: #0a0a0a;
+}
+
+.editButton:hover {
+  background: #2488d0;
+  color: white;
+}
+
+.deleteButton {
+  background: #ff5656;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #d64141;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
